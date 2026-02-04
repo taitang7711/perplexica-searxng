@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  searxng:
+    image: searxng/searxng:latest
+    container_name: perplexica-searxng
+    network_mode: host
+    volumes:
+      - ./searxng:/etc/searxng:rw
+    restart: unless-stopped
+
+  perplexica:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: perplexica-app
+    network_mode: host
+    volumes:
+      - ./data:/home/perplexica/data
+    environment:
+      - PORT=9052
+      - SEARXNG_API_URL=http://localhost:8080
+    restart: unless-stopped
+    depends_on:
+      - searxng
