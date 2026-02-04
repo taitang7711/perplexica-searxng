@@ -1,11 +1,12 @@
 # Deploy script for Perplexica + SearXNG (PowerShell version)
 $SERVER = "192.168.0.102"
 $USER = "osboxes"
-$PASSWORD = "vinhtai1511"
 $PORT = "9052"
 $REPO_URL = "https://github.com/taitang7711/perplexica-searxng.git"
 
 Write-Host "🚀 Starting deployment to ${SERVER}:${PORT}..." -ForegroundColor Green
+Write-Host "📝 Password: vinhtai1511" -ForegroundColor Yellow
+Write-Host ""
 
 # Create SSH command script
 $sshScript = @"
@@ -34,14 +35,12 @@ echo '✅ Deployment completed!' && \
 docker ps | grep perplexica
 "@
 
-# Execute via SSH (using plink if available, otherwise use ssh)
-if (Get-Command plink -ErrorAction SilentlyContinue) {
-    Write-Host "Using PuTTY plink..." -ForegroundColor Yellow
-    echo y | plink -ssh -batch -pw $PASSWORD ${USER}@${SERVER} $sshScript
-} else {
-    Write-Host "Using OpenSSH..." -ForegroundColor Yellow
-    ssh -o StrictHostKeyChecking=no ${USER}@${SERVER} $sshScript
-}
+# Execute via SSH
+Write-Host "Connecting to server via SSH..." -ForegroundColor Yellow
+Write-Host "Please enter password when prompted: vinhtai1511" -ForegroundColor Cyan
+Write-Host ""
+
+ssh -o StrictHostKeyChecking=no ${USER}@${SERVER} $sshScript
 
 Write-Host ""
 Write-Host "🎉 Remote deployment finished!" -ForegroundColor Green
