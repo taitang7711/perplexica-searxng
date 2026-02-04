@@ -65,7 +65,7 @@ sleep 10
 
 echo ""
 echo "🧪 Testing SearXNG..."
-curl -s "http://localhost:8080/search?q=test&format=json" | head -c 100
+curl -s "http://localhost:4000/search?q=test&format=json" | head -c 100
 
 echo ""
 echo "🧪 Testing Perplexica..."
